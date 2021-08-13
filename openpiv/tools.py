@@ -464,7 +464,7 @@ class Multiprocesser:
                 "Something failed loading the image file. No images were found. Please check directory and image template name."
             )
 
-    def run(self, func, n_cpus=1):
+    def run(self, func, params, n_cpus=1):
         """Start to process images.
         
         Parameters
@@ -491,10 +491,10 @@ class Multiprocesser:
         # since it is difficult to debug multiprocessing stuff.
         if n_cpus > 1:
             pool = multiprocessing.Pool(processes=n_cpus)
-            res = pool.map(func, image_pairs)
+            res = pool.map(func, image_pairs, params)
         else:
             for image_pair in image_pairs:
-                func(image_pair)
+                func(image_pair, params)
 
 
 def negative(image):
